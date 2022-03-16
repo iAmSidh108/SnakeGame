@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SwipeControls : MonoBehaviour
 {
-    public enum swipeDirections
+    public enum SwipeDirection
     {
         Up,
         Down,
@@ -16,7 +16,7 @@ public class SwipeControls : MonoBehaviour
     Vector2 swipeEnd;
     float minDistance=10f;
 
-    public static event System.Action<swipeDirections> OnSwipe = delegate { };
+    public static event System.Action<SwipeDirection> OnSwipe = delegate { };
     // Start is called before the first frame update
     void Start()
     {
@@ -58,12 +58,12 @@ public class SwipeControls : MonoBehaviour
             {
                 if (swipeEnd.y > swipeStart.y)
                 {
-                    OnSwipe(swipeDirections.Up);
+                    OnSwipe(SwipeDirection.Up);
                     //up
                 }
                 else
                 {
-                    OnSwipe(swipeDirections.Down);
+                    OnSwipe(SwipeDirection.Down);
                     //down
                 }
             }
@@ -72,12 +72,12 @@ public class SwipeControls : MonoBehaviour
             {
                 if (swipeEnd.x > swipeStart.x)
                 {
-                    OnSwipe(swipeDirections.Right);
+                    OnSwipe(SwipeDirection.Right);
                     //right
                 }
                 else
                 {
-                    OnSwipe(swipeDirections.Left);
+                    OnSwipe(SwipeDirection.Left);
                     //left
                 }
             }
