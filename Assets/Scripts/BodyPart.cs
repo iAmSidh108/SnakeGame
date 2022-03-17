@@ -31,6 +31,21 @@ public class BodyPart : MonoBehaviour
    
     virtual public void Update()
     {
+        Vector3 followPosition;
+        if (following != null)
+        {
+            if (following.getIndex > -1)
+            {
+                followPosition = following.previousPositions[following.getIndex];
+            }
+            else
+                followPosition = following.transform.position;
+        }
+        else
+        {
+            followPosition = gameObject.transform.position;
+        }
+
         previousPositions[setIndex].x = gameObject.transform.position.x;
         previousPositions[setIndex].y = gameObject.transform.position.y;
         previousPositions[setIndex].z = gameObject.transform.position.z;
@@ -40,6 +55,27 @@ public class BodyPart : MonoBehaviour
 
         getIndex++;
         if (getIndex >= PARTSREMEMBERED) getIndex = 0;
+
+        if (following != null)   //not the head
+        {
+            Vector3 newPosition;
+            if (following.getIndex > -1)
+            {
+                newPosition = followPosition;
+            }
+            else
+            {
+                newPosition = following.transform.position;
+            }
+
+            newPosition.z = newPosition.z + 0.01f;
+
+            SetMovement(newPosition - gameObject.transform.position);
+            UpdateDirection();
+            UpdatePosition();
+
+
+        }
     }
 
     public void SetMovement(Vector2 movement)
