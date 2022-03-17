@@ -6,6 +6,12 @@ public class SnakeHead : BodyPart
 {
     Vector2 movement;
 
+    private BodyPart tail = null;
+
+    const float TIMETOADDBODYPART = 0.01f;
+    float addTimer = TIMETOADDBODYPART;
+    public int partsToAdd = 0;
+
     
     void Start()
     {
@@ -21,7 +27,38 @@ public class SnakeHead : BodyPart
         UpdateDirection();
         UpdatePosition();
 
+        if (partsToAdd > 0)
+        {
+            addTimer -= Time.deltaTime;
+            if (addTimer < 0)
+            {
+                addTimer = TIMETOADDBODYPART;
+                AddBodyPart();
+                partsToAdd--;
+            }
+        }
         
+    }
+
+    void AddBodyPart()
+    {
+        if (tail == null)
+        {
+            BodyPart newPart = Instantiate(GameController.instance.bodyPrefab, transform.position, Quaternion.identity);
+            newPart.following = this;
+            tail = newPart;
+            newPart.TurnIntoTail();
+        }
+        else
+        {
+            Vector3 newPosition = tail.transform.position;
+            newPosition.z = newPosition.z + 0.01f;
+            BodyPart newPart = Instantiate(GameController.instance.bodyPrefab, newPosition, Quaternion.identity);
+            newPart.following = tail;
+            newPart.TurnIntoTail();
+            tail.TurnIntoBodyPart();
+            tail = newPart;
+        }
     }
 
     
@@ -65,9 +102,17 @@ public class SnakeHead : BodyPart
         movement = Vector2.right * GameController.instance.snakeSpeed;
     }
 
-   
+    public void ResetSnake()
+    {
+        tail = null;
+        MoveUp();
+        partsToAdd = 5;
+        addTimer = TIMETOADDBODYPART;
+    }
 
-   
 
-    
+
+
+
+
 }

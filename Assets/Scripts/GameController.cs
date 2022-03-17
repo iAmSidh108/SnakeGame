@@ -6,15 +6,28 @@ public class GameController : MonoBehaviour
 {
     public static GameController instance = null;
     public float snakeSpeed = 1;
-    // Start is called before the first frame update
+
+    public BodyPart bodyPrefab = null;
+
+    public Sprite tailSprite = null;
+    public Sprite bodySprite = null;
+
+    public SnakeHead snakeHead = null; 
     void Start()
     {
         instance = this;
+        Debug.Log("Starting the Snake Game");
+        StartGame();
     }
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+
+    void StartGame()
+    {
+        snakeHead.ResetSnake();
     }
 }
