@@ -114,7 +114,14 @@ public class SnakeHead : BodyPart
         addTimer = TIMETOADDBODYPART;
     }
 
-
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Egg egg = collision.GetComponent<Egg>();
+        if(egg)
+           Debug.Log("Egg Collision Detected");
+        else
+            Debug.Log("Collision Detected");
+    }
 
 
 

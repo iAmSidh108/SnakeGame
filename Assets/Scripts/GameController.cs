@@ -80,7 +80,7 @@ public class GameController : MonoBehaviour
         rock.transform.localScale = new Vector3(scale, scale, 0);
     }
 
-    void CreateEgg(bool golden = true)
+    void CreateEgg(bool golden = false)
     {
         Vector3 position;
         position.x = -width + Random.Range(1f, (width * 2) - 2f);
