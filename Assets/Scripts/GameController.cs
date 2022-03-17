@@ -6,13 +6,15 @@ public class GameController : MonoBehaviour
 {
     public static GameController instance = null;
 
-    const float width = 4f;
+    const float width = 3.7f;
     const float height = 7f;
 
     public float snakeSpeed = 1;
 
     public BodyPart bodyPrefab = null;
     public GameObject rockPrefab = null;
+    public GameObject eggPrefab = null;
+    public GameObject goldenEggPrefab = null;
 
     public Sprite tailSprite = null;
     public Sprite bodySprite = null;
@@ -35,6 +37,7 @@ public class GameController : MonoBehaviour
     void StartGame()
     {
         snakeHead.ResetSnake();
+        CreateEgg();
     }
     void CreateWalls()
     {
@@ -65,7 +68,7 @@ public class GameController : MonoBehaviour
         for(int rock = 0; rock <= noOfRocks; rock++)
         {
             float rotation = Random.Range(0, 360f);
-            float scale = Random.Range(1f, 2f);
+            float scale = Random.Range(1.6f, 2f);
             CreateRock(position, scale, rotation);
             position = position + delta;
         }
@@ -75,5 +78,19 @@ public class GameController : MonoBehaviour
     {
         GameObject rock = Instantiate(rockPrefab,position,Quaternion.Euler(0,0,rotation));
         rock.transform.localScale = new Vector3(scale, scale, 0);
+    }
+
+    void CreateEgg(bool golden = true)
+    {
+        Vector3 position;
+        position.x = -width + Random.Range(1f, (width * 2) - 2f);
+        position.y = -height + Random.Range(1f, (height * 2) - 2f);
+        position.z = 0;
+
+        if(golden)
+             Instantiate(goldenEggPrefab, position, Quaternion.identity);
+
+        else
+            Instantiate(eggPrefab, position, Quaternion.identity);
     }
 }
