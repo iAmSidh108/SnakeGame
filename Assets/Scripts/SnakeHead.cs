@@ -19,9 +19,10 @@ public class SnakeHead : BodyPart
     }
 
     // Update is called once per frame
-    void Update()
+    override public void Update()
     {
-       
+
+        base.Update();
 
         SetMovement(movement * Time.deltaTime);
         UpdateDirection();

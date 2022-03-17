@@ -12,6 +12,12 @@ public class BodyPart : MonoBehaviour
 
     private SpriteRenderer spriteRenderer = null;
 
+    const int PARTSREMEMBERED = 10;
+    public Vector3[] previousPositions = new Vector3[PARTSREMEMBERED];
+
+    public int setIndex = 0;
+    public int getIndex = -(PARTSREMEMBERED-1);
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -22,10 +28,18 @@ public class BodyPart : MonoBehaviour
         
     }
 
-    // Update is called once per frame
-    void Update()
+   
+    virtual public void Update()
     {
-        
+        previousPositions[setIndex].x = gameObject.transform.position.x;
+        previousPositions[setIndex].y = gameObject.transform.position.y;
+        previousPositions[setIndex].z = gameObject.transform.position.z;
+
+        setIndex++;
+        if (setIndex >= PARTSREMEMBERED) setIndex = 0;
+
+        getIndex++;
+        if (getIndex >= PARTSREMEMBERED) getIndex = 0;
     }
 
     public void SetMovement(Vector2 movement)
