@@ -23,12 +23,15 @@ public class GameController : MonoBehaviour
     public bool alive = true;
 
     public bool waitingToPlay = true;
+
+    List<Egg> eggs = new List< Egg >();
     void Start()
     {
         instance = this;
         Debug.Log("Starting the Snake Game");
         CreateWalls();
-        StartGame();
+        CreateEgg();
+        
         alive = false;
     }
 
@@ -52,11 +55,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    void StartGame()
-    {
-        snakeHead.ResetSnake();
-        CreateEgg();
-    }
+    
 
     public void GameOver()
     {
@@ -68,6 +67,8 @@ public class GameController : MonoBehaviour
     {
         waitingToPlay = false;
         alive = true;
+        KillOldEggs();
+        snakeHead.ResetSnake();
     }
 
     public void EggEaten(Egg egg)
@@ -122,10 +123,22 @@ public class GameController : MonoBehaviour
         position.y = -height + Random.Range(1f, (height * 2) - 2f);
         position.z = 0;
 
+        Egg egg = null;
         if(golden)
-             Instantiate(goldenEggPrefab, position, Quaternion.identity);
+             egg=Instantiate(goldenEggPrefab, position, Quaternion.identity).GetComponent<Egg>();
 
         else
-            Instantiate(eggPrefab, position, Quaternion.identity);
+           egg= Instantiate(eggPrefab, position, Quaternion.identity).GetComponent<Egg>();
+
+        eggs.Add(egg);
+    }
+
+    void KillOldEggs()
+    {
+        foreach(Egg egg in eggs)
+        {
+            Destroy(egg.gameObject);
+        }
+        eggs.Clear();
     }
 }

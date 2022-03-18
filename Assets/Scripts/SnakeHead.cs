@@ -12,7 +12,7 @@ public class SnakeHead : BodyPart
     float addTimer = TIMETOADDBODYPART;
     public int partsToAdd = 0;
 
-    
+    List<BodyPart> parts = new List<BodyPart>();
     void Start()
     {
         SwipeControls.OnSwipe += SwipeDetection;
@@ -52,6 +52,8 @@ public class SnakeHead : BodyPart
             newPart.following = this;
             tail = newPart;
             newPart.TurnIntoTail();
+
+            parts.Add(newPart);
         }
         else
         {
@@ -62,6 +64,8 @@ public class SnakeHead : BodyPart
             newPart.TurnIntoTail();
             tail.TurnIntoBodyPart();
             tail = newPart;
+
+            parts.Add(newPart);
         }
     }
 
@@ -108,8 +112,17 @@ public class SnakeHead : BodyPart
 
     public void ResetSnake()
     {
+        foreach(BodyPart part in parts)
+        {
+            Destroy(part.gameObject);
+        }
+        parts.Clear();
+
         tail = null;
         MoveUp();
+
+        gameObject.transform.localEulerAngles = new Vector3(0, 0, 0);
+        gameObject.transform.position = new Vector3(0, 0, 0);
         partsToAdd = 5;
         addTimer = TIMETOADDBODYPART;
     }
