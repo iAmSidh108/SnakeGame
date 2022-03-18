@@ -21,18 +21,35 @@ public class GameController : MonoBehaviour
 
     public SnakeHead snakeHead = null;
     public bool alive = true;
+
+    public bool waitingToPlay = true;
     void Start()
     {
         instance = this;
         Debug.Log("Starting the Snake Game");
         CreateWalls();
         StartGame();
+        alive = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (waitingToPlay)
+        {
+            foreach(Touch touch in Input.touches)
+            {
+                if (touch.phase == TouchPhase.Ended)
+                {
+                    StartGameplay();
+                }
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                StartGameplay();
+            }
+        }
     }
 
     void StartGame()
@@ -44,6 +61,13 @@ public class GameController : MonoBehaviour
     public void GameOver()
     {
         alive = false;
+        waitingToPlay = true;
+    }
+
+    void StartGameplay()
+    {
+        waitingToPlay = false;
+        alive = true;
     }
 
     public void EggEaten(Egg egg)
