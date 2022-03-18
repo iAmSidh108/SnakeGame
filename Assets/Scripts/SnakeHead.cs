@@ -120,6 +120,7 @@ public class SnakeHead : BodyPart
         if (egg)
         {
             Debug.Log("Egg Collision Detected");
+            EatEgg(egg);
         }
         else
         {
@@ -128,7 +129,12 @@ public class SnakeHead : BodyPart
         }
     }
 
-
+    private void EatEgg(Egg egg)
+    {
+        partsToAdd = 5;
+        addTimer = 0;
+        GameController.instance.EggEaten(egg);
+    }
 
 
 }

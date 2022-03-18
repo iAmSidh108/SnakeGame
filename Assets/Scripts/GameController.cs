@@ -45,6 +45,11 @@ public class GameController : MonoBehaviour
     {
         alive = false;
     }
+
+    public void EggEaten(Egg egg)
+    {
+        Destroy(egg.gameObject);
+    }
     void CreateWalls()
     {
         Vector3 start = new Vector3(-width, -height, 0);   //left wall
