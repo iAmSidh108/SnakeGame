@@ -19,7 +19,8 @@ public class GameController : MonoBehaviour
     public Sprite tailSprite = null;
     public Sprite bodySprite = null;
 
-    public SnakeHead snakeHead = null; 
+    public SnakeHead snakeHead = null;
+    public bool alive = true;
     void Start()
     {
         instance = this;
@@ -38,6 +39,11 @@ public class GameController : MonoBehaviour
     {
         snakeHead.ResetSnake();
         CreateEgg();
+    }
+
+    public void GameOver()
+    {
+        alive = false;
     }
     void CreateWalls()
     {

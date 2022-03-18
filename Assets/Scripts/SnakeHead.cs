@@ -21,7 +21,7 @@ public class SnakeHead : BodyPart
     // Update is called once per frame
     override public void Update()
     {
-
+        if (!GameController.instance.alive) return;
         base.Update();
 
         SetMovement(movement * Time.deltaTime);
@@ -117,10 +117,15 @@ public class SnakeHead : BodyPart
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Egg egg = collision.GetComponent<Egg>();
-        if(egg)
-           Debug.Log("Egg Collision Detected");
+        if (egg)
+        {
+            Debug.Log("Egg Collision Detected");
+        }
         else
+        {
             Debug.Log("Collision Detected");
+            GameController.instance.GameOver();
+        }
     }
 
 
