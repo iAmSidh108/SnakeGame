@@ -25,13 +25,15 @@ public class GameController : MonoBehaviour
     public bool waitingToPlay = true;
 
     List<Egg> eggs = new List< Egg >();
+
+    int level = 0;
+    int noOfEggsForNExtLevel = 0;
     void Start()
     {
         instance = this;
         Debug.Log("Starting the Snake Game");
         CreateWalls();
-        CreateEgg();
-        
+       
         alive = false;
     }
 
@@ -68,11 +70,37 @@ public class GameController : MonoBehaviour
         waitingToPlay = false;
         alive = true;
         KillOldEggs();
+        
+        LevelUp();
+    }
+
+    void LevelUp()
+    {
+        level++;
+
+        noOfEggsForNExtLevel = 4 + (level * 2);
+
+        snakeSpeed = 2f * (level / 4f);
+        if (snakeSpeed > 6) snakeSpeed = 6;
+
         snakeHead.ResetSnake();
+        CreateEgg();
     }
 
     public void EggEaten(Egg egg)
     {
+        noOfEggsForNExtLevel--;
+        if (noOfEggsForNExtLevel == 0)
+        {
+            LevelUp();
+        }
+        else if (noOfEggsForNExtLevel == 1)
+        {
+            CreateEgg(true);
+        }
+        else
+            CreateEgg(false);
+        eggs.Remove(egg);
         Destroy(egg.gameObject);
     }
     void CreateWalls()
