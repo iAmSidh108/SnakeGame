@@ -8,7 +8,7 @@ public class BodyPart : MonoBehaviour
 
     public BodyPart following = null;
 
-    private bool isTail = false;
+    //private bool isTail = false;
 
     private SpriteRenderer spriteRenderer = null;
 
@@ -109,12 +109,12 @@ public class BodyPart : MonoBehaviour
 
     public void TurnIntoTail()
     {
-        isTail = true;
+        //isTail = true;
         spriteRenderer.sprite = GameController.instance.tailSprite;
     }
     public void TurnIntoBodyPart()
     {
-        isTail = false;
+        //isTail = false;
         spriteRenderer.sprite = GameController.instance.bodySprite;
     }
 

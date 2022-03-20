@@ -112,6 +112,7 @@ public class SnakeHead : BodyPart
 
     public void ResetSnake()
     {
+       
         foreach(BodyPart part in parts)
         {
             Destroy(part.gameObject);
@@ -139,6 +140,7 @@ public class SnakeHead : BodyPart
         {
             Debug.Log("Collision Detected");
             GameController.instance.GameOver();
+            GameController.instance.level = 0;
         }
     }
 

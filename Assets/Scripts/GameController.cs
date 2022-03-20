@@ -27,7 +27,7 @@ public class GameController : MonoBehaviour
 
     List<Egg> eggs = new List< Egg >();
 
-    int level = 0;
+    public int  level = 0;
     int noOfEggsForNExtLevel = 0;
 
     public int score=0;
@@ -37,6 +37,13 @@ public class GameController : MonoBehaviour
 
     public Text scoreText=null;
     public Text highScoreText = null;
+
+    public Text tapToPlayText = null;
+    public Text gameOverText = null;
+
+
+
+
 
     void Start()
     {
@@ -69,6 +76,8 @@ public class GameController : MonoBehaviour
         scoreText.text = "Score :- " + score;
         highScoreText.text = "High Score :- " + highScore;
         LevelText.text = "Level: " + level;
+        //speedText.text = "Speed: " + snakeSpeed;
+
     }
 
     
@@ -77,10 +86,15 @@ public class GameController : MonoBehaviour
     {
         alive = false;
         waitingToPlay = true;
+        tapToPlayText.gameObject.SetActive(true);
+        gameOverText.gameObject.SetActive(true);
+
     }
 
     void StartGameplay()
     {
+        tapToPlayText.gameObject.SetActive(false);
+        gameOverText.gameObject.SetActive(false);
         score = 0;
         waitingToPlay = false;
         alive = true;
@@ -104,6 +118,7 @@ public class GameController : MonoBehaviour
         snakeHead.ResetSnake();
         CreateEgg();
     }
+    
 
     public void EggEaten(Egg egg)
     {
