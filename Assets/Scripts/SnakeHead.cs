@@ -18,6 +18,9 @@ public class SnakeHead : BodyPart
         SwipeControls.OnSwipe += SwipeDetection;
     }
 
+    public AudioSource[] eatingSounds = new AudioSource[3];
+    public AudioSource dieSound = null;
+
     // Update is called once per frame
     override public void Update()
     {
@@ -124,6 +127,8 @@ public class SnakeHead : BodyPart
 
         gameObject.transform.localEulerAngles = new Vector3(0, 0, 0);
         gameObject.transform.position = new Vector3(0, 0, 0);
+
+        ResetMemeory();
         partsToAdd = 5;
         addTimer = TIMETOADDBODYPART;
     }
@@ -131,17 +136,29 @@ public class SnakeHead : BodyPart
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Egg egg = collision.GetComponent<Egg>();
+        Spike spike = collision.GetComponent<Spike>();
         if (egg)
         {
             Debug.Log("Egg Collision Detected");
             EatEgg(egg);
+            int rand = Random.Range(0, 3);
+            eatingSounds[rand].Play();
         }
         else
         {
-            Debug.Log("Collision Detected");
+            if (spike)
+            {
+                Debug.Log("Spike Detected");
+            }
+            else
+                Debug.Log("Collision Detected");
+
+            dieSound.Play();
             GameController.instance.GameOver();
             GameController.instance.level = 0;
         }
+
+
     }
 
     private void EatEgg(Egg egg)

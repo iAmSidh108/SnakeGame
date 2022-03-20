@@ -16,6 +16,7 @@ public class GameController : MonoBehaviour
     public GameObject rockPrefab = null;
     public GameObject eggPrefab = null;
     public GameObject goldenEggPrefab = null;
+    public GameObject spikePrefab = null;
 
     public Sprite tailSprite = null;
     public Sprite bodySprite = null;
@@ -41,8 +42,7 @@ public class GameController : MonoBehaviour
     public Text tapToPlayText = null;
     public Text gameOverText = null;
 
-
-
+    
 
 
     void Start()
@@ -139,6 +139,7 @@ public class GameController : MonoBehaviour
 
         if (score > highScore)
             highScore = score;
+
         eggs.Remove(egg);
         Destroy(egg.gameObject);
     }

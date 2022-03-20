@@ -79,6 +79,12 @@ public class BodyPart : MonoBehaviour
         }
     }
 
+    public void ResetMemeory()
+    {
+        setIndex = 0;
+        getIndex = -(PARTSREMEMBERED - 1);
+    }
+
     public void SetMovement(Vector2 movement)
     {
         dPosition = movement;
