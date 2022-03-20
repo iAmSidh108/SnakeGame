@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -28,6 +29,15 @@ public class GameController : MonoBehaviour
 
     int level = 0;
     int noOfEggsForNExtLevel = 0;
+
+    public int score=0;
+    public int highScore = 0;
+
+    public Text LevelText = null;
+
+    public Text scoreText=null;
+    public Text highScoreText = null;
+
     void Start()
     {
         instance = this;
@@ -55,6 +65,10 @@ public class GameController : MonoBehaviour
                 StartGameplay();
             }
         }
+
+        scoreText.text = "Score :- " + score;
+        highScoreText.text = "High Score :- " + highScore;
+        LevelText.text = "Level: " + level;
     }
 
     
@@ -67,15 +81,19 @@ public class GameController : MonoBehaviour
 
     void StartGameplay()
     {
+        score = 0;
         waitingToPlay = false;
         alive = true;
         KillOldEggs();
-        
+
+
         LevelUp();
     }
 
     void LevelUp()
     {
+
+        
         level++;
 
         noOfEggsForNExtLevel = 4 + (level * 2);
@@ -89,9 +107,12 @@ public class GameController : MonoBehaviour
 
     public void EggEaten(Egg egg)
     {
+
+        score++;
         noOfEggsForNExtLevel--;
         if (noOfEggsForNExtLevel == 0)
         {
+            score += 10;
             LevelUp();
         }
         else if (noOfEggsForNExtLevel == 1)
@@ -100,6 +121,9 @@ public class GameController : MonoBehaviour
         }
         else
             CreateEgg(false);
+
+        if (score > highScore)
+            highScore = score;
         eggs.Remove(egg);
         Destroy(egg.gameObject);
     }
