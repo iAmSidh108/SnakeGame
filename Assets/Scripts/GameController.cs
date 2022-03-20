@@ -27,9 +27,11 @@ public class GameController : MonoBehaviour
     public bool waitingToPlay = true;
 
     List<Egg> eggs = new List< Egg >();
+    List<Spike> spikes = new List<Spike>();
 
     public int  level = 0;
     int noOfEggsForNExtLevel = 0;
+    int noOfSpikesForNextLevel = 0;
 
     public int score=0;
     public int highScore = 0;
@@ -99,7 +101,7 @@ public class GameController : MonoBehaviour
         waitingToPlay = false;
         alive = true;
         KillOldEggs();
-
+        DestroyAllSpikes();
 
         LevelUp();
     }
@@ -111,12 +113,17 @@ public class GameController : MonoBehaviour
         level++;
 
         noOfEggsForNExtLevel = 4 + (level * 2);
+        noOfSpikesForNextLevel = level;
+
+        
 
         snakeSpeed = 2f * (level / 4f);
         if (snakeSpeed > 6) snakeSpeed = 6;
 
         snakeHead.ResetSnake();
         CreateEgg();
+        DestroyAllSpikes();
+        CreateSpike();
     }
     
 
@@ -200,6 +207,23 @@ public class GameController : MonoBehaviour
 
         eggs.Add(egg);
     }
+    void CreateSpike()
+    {
+        Spike spike = null;
+
+        for(int i = 1; i <= level; i++)
+        {
+            Vector3 position;
+            position.x = -width + Random.Range(1f, (width * 2) - 2f);
+            position.y = -height + Random.Range(1f, (height * 2) - 2f);
+            position.z = 0;
+
+
+            spike = Instantiate(spikePrefab, position, Quaternion.identity).GetComponent<Spike>();
+            spikes.Add(spike);
+        }
+        
+    }
 
     void KillOldEggs()
     {
@@ -208,5 +232,13 @@ public class GameController : MonoBehaviour
             Destroy(egg.gameObject);
         }
         eggs.Clear();
+    }
+    void DestroyAllSpikes()
+    {
+        foreach(Spike spike in spikes)
+        {
+            Destroy(spike.gameObject);
+        }
+        spikes.Clear();
     }
 }
