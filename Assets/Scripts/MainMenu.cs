@@ -7,6 +7,14 @@ public class MainMenu : MonoBehaviour
 {
     public void PlayButton()
     {
+        foreach (Touch touch in Input.touches)
+        {
+            if (touch.phase == TouchPhase.Ended)
+            {
+                SceneManager.LoadScene(1);
+            }
+        }
+
         SceneManager.LoadScene(1);
     }
     
